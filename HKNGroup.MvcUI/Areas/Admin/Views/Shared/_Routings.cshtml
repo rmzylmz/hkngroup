@@ -1,0 +1,122 @@
+<div class="vertical-menu">
+    <!-- Top Account Pill Dropdown (Hesabım & Profil Menüsü) -->
+    <div class="sidebar-pill-wrapper dropdown">
+        <button type="button" class="sidebar-user-pill dropdown-toggle" id="sidebarUserDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Hesap Menüsü">
+            <span class="pill-text">HKN GROUP (@(User.FindFirst("Username")?.Value?.ToUpper() ?? User.Identity?.Name?.ToUpper() ?? "YÖNETİCİ"))</span>
+            <i class="bx bx-chevron-down pill-chevron"></i>
+        </button>
+        <div class="dropdown-menu sidebar-pill-dropdown-menu" aria-labelledby="sidebarUserDropdown">
+            <div class="dropdown-header-user">
+                <div class="dropdown-user-title">Giriş Yapan</div>
+                <div class="dropdown-user-name">@(User.FindFirst("Username")?.Value?.ToUpper() ?? User.Identity?.Name?.ToUpper() ?? "YÖNETİCİ")</div>
+            </div>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Setting">
+                <i class="bx bx-user text-primary"></i>
+                <span>Profilim</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" asp-area="Admin" asp-controller="Home" asp-action="LogOut">
+                <i class="bx bx-power-off text-danger"></i>
+                <span>Çıkış Yap</span>
+            </a>
+        </div>
+    </div>
+
+    <div data-simplebar class="sidebar-scroll">
+        <div id="sidebar-menu">
+            <ul class="metismenu" id="side-menu">
+                <li>
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="bx bx-user"></i>
+                        <span>Yönetim Özeti</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-grid-alt"></i>
+                        <span>Site Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="SiteSettings" asp-action="Index">Site Ayarları</a></li>
+                        <li><a asp-controller="Menus" asp-action="Index">Header Menüleri</a></li>
+                        <li><a asp-controller="PopupMessage" asp-action="Index">Açılır Pop-up Mesaj</a></li>
+                        <li><a asp-controller="Slider" asp-action="Index">Sliders Yönetimi</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-news"></i>
+                        <span>Makale Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="Article" asp-action="Index">Makale Listesi</a></li>
+                        <li><a asp-controller="Article" asp-action="Add">Yeni Makale Ekle</a></li>
+                        <li><a asp-controller="ArticleCategory" asp-action="Index">Kategoriler</a></li>
+                        <li><a asp-controller="ArticleComment" asp-action="Index">Yorumlar</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-briefcase-alt"></i>
+                        <span>Proje Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="Project" asp-action="Index">Proje Listesi</a></li>
+                        <li><a asp-controller="Project" asp-action="Add">Yeni Proje Ekle</a></li>
+                        <li><a asp-controller="ProjectCategory" asp-action="Index">Proje Kategorileri</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-wrench"></i>
+                        <span>Hizmet Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="OurServices" asp-action="Index">Hizmet Listesi</a></li>
+                        <li><a asp-controller="OurServices" asp-action="Add">Yeni Hizmet Ekle</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-message-rounded-dots"></i>
+                        <span>Sayfa Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="Page" asp-action="Index">Sayfa Listesi</a></li>
+                        <li><a asp-controller="Page" asp-action="Add">Yeni Sayfa Ekle</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i class="bx bx-tag"></i>
+                        <span>Referans Yönetimi</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="Referance" asp-action="Index">Referans Listesi</a></li>
+                        <li><a asp-controller="Referance" asp-action="Add">Yeni Referans Ekle</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a asp-controller="Messages" asp-action="Index">
+                        <i class="bx bx-envelope"></i>
+                        <span>Gelen Mesajlar</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-logout-item">
+                    <a asp-controller="Home" asp-action="LogOut">
+                        <i class="bx bx-power-off"></i>
+                        <span>Çıkış Yap</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

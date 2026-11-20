@@ -1,0 +1,33 @@
+ 
+@model List<MenuItemDto>
+
+@{
+    void RenderMenu(List<MenuItemDto> items)
+    {
+        <ul>
+            @foreach (var item in items)
+            {
+                <li class="@(item.Children != null && item.Children.Any() ? "menu-item-has-children" : "")">
+                    <a target="@(item.YanSekme == true? "_blank" : "")" href="@(item.YanSekme == true? "" : "/")@item.Url">@item.Name</a>
+                    @if (item.Children != null && item.Children.Any())
+                    {
+                        <ul class="sub-menu">
+                            @foreach (var childItem in item.Children)
+                            {
+                                <li>
+
+                                    <a target="@(childItem.YanSekme == true? "_blank" : "")" href="@(childItem.YanSekme == true? "" : "/")@childItem.Url">@childItem.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+             
+        </ul>
+    }
+}
+
+@{
+    RenderMenu(Model);
+}

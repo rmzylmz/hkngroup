@@ -1,0 +1,17 @@
+global using HKNGroup.Application.Common.Helpers;
+global using HKNGroup.Application.Interfaces.Repositories;
+global using HKNGroup.Application.Interfaces.Security;
+global using HKNGroup.Core.Data.Concrete.EntityFramework;
+global using HKNGroup.Core.Security;
+global using HKNGroup.Data.Concrete.EntityFramework.Repositories;
+global using HKNGroup.DataAccess.Concrete.EntityFramework.Repositories;
+global using HKNGroup.DataAccess.Concrete.EntityFramework.UnitOfWork;
+global using HKNGroup.Domain.Common;
+global using HKNGroup.Domain.Entities;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Linq.Expressions;
+global using System.Threading.Tasks;

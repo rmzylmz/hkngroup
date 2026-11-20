@@ -1,0 +1,32 @@
+@model SiteSettingsUpdateDto
+ 
+<div class="header-top">
+    <div class="container">
+        <div class="row justify-content-center justify-content-lg-between align-items-center">
+            <div class="col-auto d-none d-lg-block">
+                <p class="header-notice" aria-label="@Html.Raw(Model.SiteSlogan)">@Html.Raw(Model.SiteSlogan)</p>
+            </div>
+            <div class="col-auto">
+                <div class="header-social">
+                    <span class="social-title">Bizi takip edin :</span>
+                    <a href="@Model.FacebookSite" aria-label="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="@Model.TwitterSite" aria-label="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a> 
+                    <a href="@Model.InstagramSite" aria-label="instgram">
+                        <i class="fab fa-instagram"></i>
+                    </a> 
+                    <a href="@Model.YoutubeSite" aria-label="youtube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

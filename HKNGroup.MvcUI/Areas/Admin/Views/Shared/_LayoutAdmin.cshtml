@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>@ViewData["Title"] - HKN Group Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/admin/assets/images/favicon.ico">
+
+    <!-- Icons Font & Custom Ultra-Lightweight Admin CSS -->
+    <link href="~/admin/assets/css/icons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+    <link href="~/admin/custom/admin.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div id="layout-wrapper">
+        <!-- Top Full-Width Navbar -->
+        <partial name="_AdminNavbarHeader" />
+
+        <!-- Layout Body: Sidebar + Main Content -->
+        <div class="layout-body">
+            <partial name="_Routings" />
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rightbar-overlay"></div>
+
+    <!-- Quill WYSIWYG Editor Core & Custom Admin Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="~/admin/custom/admin.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

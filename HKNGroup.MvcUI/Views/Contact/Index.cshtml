@@ -1,0 +1,110 @@
+@model SiteSettingsUpdateDto
+@{
+
+    ViewBag.SeoTitle = "İletişim";
+    ViewBag.SeoDescription = Model.SiteDescription;
+    ViewBag.SeoKeywords = Model.SiteKeyword;
+}
+
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+<div class="space">
+    <div class="container">
+        <div class="row gy-40">
+            <div class="col-xl-5">
+                <div class="contact-info-wrap">
+                    <h2 class="fs-40 border-title">İletişim bilgileri</h2>
+                    <div class="contact-info">
+                        <h4 class="contact-info_title">Telefon Numarası:</h4>
+                        <div class="contact-info_icon">
+                            <i class="fal fa-phone"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="contact-info_text">
+                                <a href="tel:@Model.ContactNumber">@Model.ContactNumber</a>
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <h4 class="contact-info_title">Mail Adresi:</h4>
+                        <div class="contact-info_icon">
+                            <i class="fal fa-envelope"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="contact-info_text">
+                                <a href="mailto:@Model.SiteMail">@Model.SiteMail</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <h4 class="contact-info_title">Adres Bilgisi:</h4>
+                        <div class="contact-info_icon">
+                            <i class="fal fa-location-dot"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="contact-info_text">
+                                @Model.ContactAdress
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1504.9962799855323!2d29.233129238742404!3d41.02541871634645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDAxJzMxLjUiTiAyOcKwMTQnMDMuOSJF!5e0!3m2!1str!2str!4v1686809417336!5m2!1str!2str" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="space-bottom overflow-hidden">
+    <div class="container">
+        <div class="row gy-40 align-items-end">
+            <div class="col-xl-8">
+                <h3 class="fs-40 mb-2 mt-n2">Bize Yazın</h3>
+                <form action="/Contact/SendMessage" method="POST" class="quote-form ajax-contact">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Adınız Soyadınız" required>
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email Adresi" required>
+                            <i class="fal fa-envelope"></i>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="tel" class="form-control" name="number" id="number" placeholder="Telefon Numarası" required>
+                            <i class="fal fa-phone"></i>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <select name="subject" id="subject" class="form-select" required>
+                                <option value="" disabled="disabled" selected="selected" hidden>Hizmet Seçiniz</option>
+                                <option value="İnşaat & Taahhüt">İnşaat & Taahhüt</option>
+                                <option value="Oto Yedek Parça">Oto Yedek Parça</option>
+                                <option value="Genel Bilgi / Diğer">Genel Bilgi / Diğer</option>
+
+                            </select>
+                            <i class="fal fa-chevron-down"></i>
+                        </div>
+                        <div class="form-group col-12">
+                            <textarea name="message" id="message" cols="30" rows="3" class="form-control" placeholder="Mesajınız" required></textarea>
+                            <i class="fal fa-comment"></i>
+                        </div>
+                        <div class="form-btn col-12">
+                            <button class="as-btn">Gönder</button>
+                        </div>
+                    </div>
+                    <p class="form-messages mb-0 mt-3"></p>
+                </form>
+            </div>
+            <div class="col-xl-4">
+                <div class="contact-img">
+                    <img src="assets/img/normal/contact_1.png" alt="vector">
+                </div>
+            </div>
+        </div>
+    </div>
+</section> 
+

@@ -1,0 +1,15 @@
+<div class="as-menu-wrapper">
+    <div class="as-menu-area text-center">
+        <button class="as-menu-toggle">
+            <i class="fal fa-times"></i>
+        </button>
+        <div class="mobile-logo">
+            <a href="/Anasayfa">
+                <img src="/assets/img/logo.jpg" alt="HKN Grup" >
+            </a>
+        </div>
+        <div class="as-mobile-menu">
+            @await Component.InvokeAsync("MenuViewComponents")
+        </div>
+    </div>
+</div>

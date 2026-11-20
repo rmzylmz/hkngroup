@@ -1,0 +1,102 @@
+@using HKNGroup.WebUI.Models;
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="J4N2Hhj5_flbHc5uc7iCDasQN4YgElSeVLSCh_Rl0L0" />
+    <meta name="yandex-verification" content="b30eac2447db74f5" />
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/fav/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/fav/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/fav/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/fav/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/fav/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/fav/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/fav/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/fav/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png">
+    <link rel="manifest" href="/fav/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/fav/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <title> HKN Group | @Html.Raw(@ViewBag.SeoTitle)</title>
+    <meta name="description" content="@Html.Raw(ViewBag.SeoDescription)" />
+    <meta name="keywords" content="@Html.Raw(ViewBag.SeoKeywords)" />
+
+    <meta property="og:image" content="https://hkngrup.com/assets/img/logo.jpg" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="600" />
+    <meta property="og:title" content="@Html.Raw(Context.Session.GetString("WebSite"))"   />
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@Html.Raw(Context.Session.GetString("MetaDescription"))" />
+    <meta property="og:url" content="@Html.Raw(Context.Session.GetString("WebSite"))" />
+
+
+    <meta property="og:site_name" content="tr" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Radio+Canada:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="~/assets/hakangroup.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body class="home1">
+    <div class="preloader">
+        <div class="preloader-inner">
+            <span class="loader"></span>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("~/Views/Shared/Partials/SideMenu/Index.cshtml")
+    @await Html.PartialAsync("~/Views/Shared/Partials/Search/Index.cshtml")
+    @await Html.PartialAsync("~/Views/Shared/Partials/MobileMenu/Index.cshtml")
+
+    @if (@ViewBag.CurrentURL == "Home")
+    {
+        <header class="as-header header-layout4">
+            @await Component.InvokeAsync("NavbarTop")
+            @await Component.InvokeAsync("NavbarMiddle")
+            @await Html.PartialAsync("~/Views/Shared/Partials/Menus/HomeNavigationBar.cshtml")
+        </header>
+    }
+    else
+    {
+        @await Html.PartialAsync("~/Views/Shared/Partials/Menus/NavbarOnOtherPages.cshtml")
+    }
+
+    @RenderBody()
+
+    <a href="#" class="scrollToTop scroll-btn">
+        <i class="far fa-long-arrow-up"></i>
+    </a>
+    <footer class="footer-wrapper footer-layout2 background-image" style="background-image: url(/assets/img/bg/footer_bg_4.jpg);">
+        @await Component.InvokeAsync("FooterAccounts")
+        @await Component.InvokeAsync("FooterAdress")
+    </footer>
+    <script src="/assets/hakangroup.js" asp-append-version="true"></script>
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PMCR1RN1X"></script>
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3PMCR1RN1X');
+    </script>
+</body>
+
+</html>

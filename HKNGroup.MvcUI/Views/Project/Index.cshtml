@@ -1,0 +1,40 @@
+@model HKNGroup.WebUI.Models.ProjectViewModel;
+ 
+@{
+    ViewBag.SeoTitle = "Projelerimiz";
+    ViewBag.SeoDescription = Model.SiteSetting.SiteDescription;
+    ViewBag.SeoKeywords = Model.SiteSetting.SiteKeyword;
+}
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+ 
+<section class="space">
+    <div class="container">
+  
+        <div class="row gy-4">
+            @if (Model.ProjectCategories.Count > 0)
+            {   
+                @foreach (var item in Model.ProjectCategories)
+                {
+                    <div class="col-md-6 col-xl-4">
+                        <div class="project-grid">
+                            <div class="project-grid_img">
+                                <img src="@item.siteBaseUrl@item.CoverPhoto" alt="@item.Name">
+                            </div>
+                            <div class="project-grid_content">
+                                <h3 class="project-grid_title box-title proje-title">
+                                    <a href="/@RoutingEnum.ProjeKategori/@item.Url">@item.Name</a>
+                                </h3>
+                                <a href="/@RoutingEnum.ProjeKategori/@item.Url" class="project-grid_btn popup-image">
+                                    <i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</section>
+

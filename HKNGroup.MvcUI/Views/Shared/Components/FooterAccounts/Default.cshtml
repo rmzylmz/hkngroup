@@ -1,0 +1,73 @@
+@model SiteSettingsUpdateDto
+
+
+<div class="widget-area">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-6 col-xl-4">
+                <div class="widget footer-widget">
+                    <h3 class="widget_title">Bize Ulaşın</h3>
+                    <div class="as-widget-about">
+                         <p class="footer-info style2">
+                            <i class="fas fa-location-dot"></i>
+                            @Model.ContactAdress
+                        </p>
+                        <p class="footer-info style2">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:@Model.SiteMail" class="info-box_link">@Model.SiteMail</a>
+                        </p>
+                        <p class="footer-info style2">
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:@Model.ContactNumber" class="info-box_link">@Model.ContactNumber</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-auto">
+                <div class="widget widget_nav_menu footer-widget">
+                    <h3 class="widget_title">Hızlı Bağlantılar</h3>
+                    <div class="menu-all-pages-container">
+                        <ul class="menu">
+                            <li>
+                                <a href="/icerik/hakkimizda">Hakkımızda</a>
+                            </li>
+                            <li>
+                                <a href="/projeler">Projelerimiz</a>
+                            </li>                           
+                            <li>
+                                <a href="/iletisim">Bize Ulaşın</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-auto">
+                <div class="widget widget_nav_menu footer-widget">
+                    <h3 class="widget_title">Faaliyet Alanları</h3>
+                    <div class="menu-all-pages-container">
+                        <ul class="menu">
+                            <li>
+                                <a href="#">İnşaat & Taahhüt</a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="https://zirveotomotiv.hkngrup.com/">Zirve Otomotiv</a>
+                            </li>
+                             
+                        </ul>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@*@foreach (var item in Model.SocialMediaAccounts)
+{
+    <li class="list-inline-item">
+        <a href="@item.AccountUrl" class="px-2" style="font-size:2.5rem" title="@item.AccountUrl">
+            @Html.Raw(item.AccountFA)
+        </a>
+    </li>
+}*@
+

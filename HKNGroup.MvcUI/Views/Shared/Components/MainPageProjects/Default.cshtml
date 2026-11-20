@@ -1,0 +1,79 @@
+@model ProjectListDto
+<section class="space-extra-top pb-5">
+    <div class="container">
+        <div class="row justify-content-lg-between justify-content-center align-items-end">
+            <div class="col-lg-9 mb-n2 mb-lg-0">
+                <div class="title-area text-center text-lg-start">
+                    <span class="sub-title">ÖNE ÇIKAN PROJELERİMİZ</span>
+                    <h2 class="sec-title">Projelerimizden bazıları</h2>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="sec-btn">
+                    <div class="icon-box">
+                        <button data-slick-prev="#projectSlide1" class="slick-arrow default">
+                            <i class="far fa-arrow-left"></i>
+                        </button>
+                        <button data-slick-next="#projectSlide1" class="slick-arrow default">
+                            <i class="far fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row slider-shadow as-carousel" id="blogSlide1" data-slide-show="3" data-lg-slide-show="2" data-md-slide-show="2" data-sm-slide-show="1" data-arrows="true">
+
+
+            @foreach (var item in Model.Projects)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="blog-card">
+                        <div class="blog-img">
+                            <img src="@item.siteBaseUrl@item.CoverImageUrl" alt="@item.Title">
+                        </div>
+                        <div class="blog-content">
+
+                            <h3 class="blog-title box-title">
+                                <a href="/@RoutingEnum.Proje/@item.Url">@item.Title</a>
+                            </h3>
+                            <div class="blog1">
+                                <p class="blog-text">@Html.Raw(item.ShortContent)</p>
+                            </div>
+                            <a href="/@RoutingEnum.Proje/@item.Url" class="line-btn">Projeye Git</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="shape-mockup spin" data-top="26%" data-left="12%">
+        <img src="assets/img/shape/loader_1.png" alt="shape">
+    </div>
+    <div class="shape-mockup spin" data-bottom="30%" data-left="5%">
+        <img src="assets/img/shape/loader_2.png" alt="shape">
+    </div>
+    <div class="shape-mockup spin d-none d-sm-block" data-top="12%" data-right="6%">
+        <img src="assets/img/shape/loader_2.png" alt="shape">
+    </div>
+    <div class="shape-mockup spin" data-bottom="20%" data-right="9%">
+        <img src="assets/img/shape/loader_3.png" alt="shape">
+    </div>
+    <div class="shape-mockup" data-top="40%" data-right="8%">
+        <img src="assets/img/shape/blob_1.png" alt="shape">
+    </div>
+</section>
+
+
+<style>
+    .blog1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 90px;
+    }
+</style>
+
+
+

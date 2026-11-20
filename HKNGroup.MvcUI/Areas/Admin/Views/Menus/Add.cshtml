@@ -1,0 +1,225 @@
+﻿@model MyMenusViewModel
+
+@{
+    ViewData["Title"] = "Yeni Menü Ekle";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">Yeni Menü Ekle</h4>
+                <p class="text-muted font-size-13 mb-0">Web sitenizin navigasyon yapısına yeni bir bağlantı ekleyin</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Menus">Menüler</a></li>
+                    <li class="breadcrumb-item active">Yeni Menü</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mb-4 p-3" style="border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;">
+                    <div class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="bx bx-error-circle font-size-18"></i> Lütfen aşağıdaki hataları kontrol ediniz:
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger font-size-13 mb-0" style="padding-left: 1.5rem;"></div>
+                </div>
+            }
+        <form asp-action="Add" asp-controller="Menus" method="post" id="menuForm">
+            <div class="row g-4">
+                <!-- Sol Kolon: Temel Bilgiler -->
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label for="menu_ust" class="form-label fw-semibold">Üst Menü</label>
+                        <select asp-for="MenuAddDto.ParentId" class="form-select" id="menu_ust">
+                            <option value="0">Ana Menü (Üst Menü Yok)</option>
+                            @await RenderMenuOptions(Model.MenuList, 0, "")
+                        </select>
+                        <small class="text-muted">Bu menünün hangi başlığın altında yer alacağını belirleyin.</small>
+
+                        @functions {
+                            async Task<object> RenderMenuOptions(IList<Menus> menus, int parentId, string prefix)
+                            {
+                                var childMenus = menus.Where(x => x.ParentId == parentId).ToList();
+                                foreach (var menu in childMenus)
+                                {
+                                    <option value="@menu.Id" data-id="@menu.ParentId">@Html.Raw($"{prefix}{menu.Name}")</option>
+                                    if (menus.Any(x => x.ParentId == menu.Id))
+                                    {
+                                        await RenderMenuOptions(menus, menu.Id, $"{prefix}— ");
+                                    }
+                                }
+                                return Task.CompletedTask;
+                            }
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="menu_isim" class="form-label fw-semibold">Menü Başlığı <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="MenuAddDto.Name" placeholder="Örn: Kurumsal, Hizmetlerimiz" required id="menu_isim">
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-sm-6 mb-3">
+                            <label for="menu_sira" class="form-label fw-semibold">Görüntüleme Sırası</label>
+                            <input type="number" min="0" asp-for="MenuAddDto.MenuRow" class="form-control" id="menu_sira" value="1">
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label for="yan_sekme" class="form-label fw-semibold">Sekme Davranışı</label>
+                            <select asp-for="MenuAddDto.YanSekme" class="form-select" id="yan_sekme">
+                                <option value="False">Aynı Sekmede Aç</option>
+                                <option value="True">Yeni Sekmede Aç (_blank)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Kolon: Bağlantı ve Hedef -->
+                <div class="col-lg-6">
+                    <div class="mb-3 tip-container">
+                        <label for="otomatik_listeleme" class="form-label fw-semibold">Otomatik Listeleme (Dinamik Alt Menü)</label>
+                        <select asp-for="MenuAddDto.AutomaticListing" class="form-select" id="otomatik_listeleme">
+                            <option value="0" selected>Otomatik listeleme yok (Manuel)</option>
+                            <option value="3">Proje Kategorileri</option>
+                            <option value="4">Projeler</option>
+                            <option value="5">Hizmetler</option>
+                            <option value="6">Haberler / Makaleler</option>
+                            <option value="7">Haber Kategorileri</option>
+                        </select>
+                        <small class="text-muted">Seçilen modüle ait içerikler dinamik alt menü olarak listelenir.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="menu_url" class="form-label fw-semibold">Hedef Bağlantı Sayfası</label>
+                        <select id="menu_url" class="form-select">
+                            <option value="0" selected>Diğer (Manuel Link Ekle)</option>
+                            <optgroup label="Sabit Sayfalar">
+                                <option value="anasayfa">Anasayfa</option>
+                                <option value="urunler">Ürünler</option>
+                                <option value="projeler">Projeler</option>
+                                <option value="haberler">Haberler</option>
+                                <option value="hizmetler">Hizmetlerimiz</option> 
+                                <option value="referanslar">Referanslarımız</option> 
+                                <option value="iletisim">İletişim</option>
+                            </optgroup>
+                            <optgroup label="Kurumsal / İçerik Sayfaları">
+                                @foreach (var category in Model.PageList)
+                                {
+                                    if (category != null)
+                                    {
+                                        <option value="@RoutingEnum.Icerik/@SeoHelper.ToSeoUrl(category.PageTitle.ToString())">@category.PageTitle</option>
+                                    }
+                                }
+                            </optgroup>
+                            <optgroup label="Proje Kategorileri">
+                                @foreach (var pc in Model.ProjectCategories)
+                                {
+                                    if (pc != null)
+                                    {
+                                        <option value="@RoutingEnum.ProjeKategori/@SeoHelper.ToSeoUrl(pc.Name.ToString())">@pc.Name</option>
+                                    }
+                                }
+                            </optgroup>
+                            <optgroup label="Projeler">
+                                @foreach (var project in Model.Projects)
+                                {
+                                    if (project != null)
+                                    {
+                                        <option value="@RoutingEnum.Proje/@SeoHelper.ToSeoUrl(project.Title.ToString())">@project.Title</option>
+                                    }
+                                }
+                            </optgroup>
+                            <optgroup label="Haber Kategorileri">
+                                @foreach (var ac in Model.ArticleCategories)
+                                {
+                                    if (ac != null)
+                                    {
+                                        <option value="@RoutingEnum.HaberKategori/@SeoHelper.ToSeoUrl(ac.Name.ToString())">@ac.Name</option>
+                                    }
+                                }
+                            </optgroup>
+                            <optgroup label="Haberler">
+                                @foreach (var art in Model.Articles)
+                                {
+                                    if (art != null)
+                                    {
+                                        <option value="@RoutingEnum.HaberDetay/@SeoHelper.ToSeoUrl(art.Title.ToString())">@art.Title</option>
+                                    }
+                                }
+                            </optgroup>
+                            <optgroup label="Hizmetler">
+                                @foreach (var srv in Model.OurServices)
+                                {
+                                    if (srv != null)
+                                    {
+                                        <option value="@RoutingEnum.Hizmet/@SeoHelper.ToSeoUrl(srv.Title.ToString())">@srv.Title</option>
+                                    }
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="link-field-wrapper">
+                        <label for="link-input" class="form-label fw-semibold">Özel Bağlantı Adresi (URL)</label>
+                        <input type="text" class="form-control" id="link-input" asp-for="MenuAddDto.LinkPage" value="#">
+                        <small class="text-muted">Dış bir site adresi veya özel rota yazabilirsiniz (Örn: /hakkimizda veya https://...).</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 mt-3 border-top">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bx bx-arrow-back"></i> İptal
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-check"></i> Menüyü Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        var menuUrlSelect = document.getElementById("menu_url");
+        var linkInput = document.getElementById("link-input");
+        var linkWrapper = document.getElementById("link-field-wrapper");
+        var parentSelect = document.getElementById("menu_ust");
+        var tipContainer = document.querySelector(".tip-container");
+
+        function updateLinkVisibility() {
+            if (!menuUrlSelect || !linkInput) return;
+            var val = menuUrlSelect.value;
+            if (val === "0") {
+                if (linkWrapper) linkWrapper.style.display = "block";
+            } else {
+                linkInput.value = val;
+                if (linkWrapper) linkWrapper.style.display = "none";
+            }
+        }
+
+        function updateParentBehavior() {
+            if (!parentSelect || !tipContainer) return;
+            // Alt menü ise otomatik listelemeyi gizle
+            tipContainer.style.display = parentSelect.value === "0" ? "block" : "none";
+        }
+
+        if (menuUrlSelect) {
+            menuUrlSelect.addEventListener("change", updateLinkVisibility);
+            updateLinkVisibility();
+        }
+
+        if (parentSelect) {
+            parentSelect.addEventListener("change", updateParentBehavior);
+            updateParentBehavior();
+        }
+    });
+</script>

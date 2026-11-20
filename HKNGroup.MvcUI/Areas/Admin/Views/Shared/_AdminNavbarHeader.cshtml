@@ -1,0 +1,55 @@
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex align-items-center gap-3">
+            <button type="button" id="vertical-menu-btn" title="Menüyü Aç/Kapat" class="topbar-toggle-btn">
+                <i class="bx bx-menu"></i>
+            </button>
+
+            <!-- Brand Logo (ŞOK NET Style Brand) -->
+            <a href="/Admin/Home" class="topbar-brand">
+                <div class="brand-symbol">
+                    <span class="symbol-dot"></span>
+                    <span class="symbol-text">HKN</span>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">GROUP</span>
+                    <span class="brand-sub">YÖNETİM</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <!-- Siteyi Gör -->
+            <a href="/" target="_blank" class="topbar-site-link" title="Web Sitesini Görüntüle">
+                <i class="bx bx-globe"></i>
+                <span class="d-none d-sm-inline">Siteyi Gör</span>
+            </a>
+
+            <!-- Hesabım Açılır Menüsü (Profilim & Çıkış) -->
+            <div class="dropdown topbar-user-dropdown">
+                <button type="button" class="topbar-user-btn dropdown-toggle" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="user-label">Hesabım</span>
+                    <div class="user-avatar-circle">
+                        <i class="bx bxs-user"></i>
+                    </div>
+                    <i class="bx bx-chevron-down chevron-icon"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
+                    <div class="dropdown-header-user">
+                        <div class="dropdown-user-title">Giriş Yapan</div>
+                        <div class="dropdown-user-name">@(User.FindFirst("Username")?.Value?.ToUpper() ?? User.Identity?.Name?.ToUpper() ?? "YÖNETİCİ")</div>
+                    </div>
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Setting">
+                        <i class="bx bx-user text-primary"></i>
+                        <span>Profilim</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" asp-controller="Home" asp-action="LogOut">
+                        <i class="bx bx-power-off text-danger"></i>
+                        <span>Çıkış Yap</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

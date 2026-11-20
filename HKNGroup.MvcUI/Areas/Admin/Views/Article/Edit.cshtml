@@ -1,0 +1,137 @@
+﻿@model ArticleUpdateDto
+
+@{
+    ViewBag.Title = "Makale Bilgileri Düzenleme";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">Makale Düzenle</h4>
+                <p class="text-muted font-size-13 mb-0">Makale içeriğini ve görselini güncelleyin</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Article">Makaleler</a></li>
+                    <li class="breadcrumb-item active">Düzenle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data" id="articleEditForm">
+        <div class="card-body">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mb-4 p-3" style="border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;">
+                    <div class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="bx bx-error-circle font-size-18"></i> Lütfen aşağıdaki hataları kontrol ediniz:
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger font-size-13 mb-0" style="padding-left: 1.5rem;"></div>
+                </div>
+            }
+            <input hidden asp-for="Id" />
+            <input hidden asp-for="Thumbnail" />
+
+            <div class="row g-4">
+                <!-- Sol Kolon: Başlık, Kategori, Kısa İçerik, Detay (Geniş Alan) -->
+                <div class="col-lg-8 col-xl-8 col-xxl-9">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label fw-semibold">Makale Başlığı <span class="text-danger">*</span></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                        <select asp-for="CategoryId" class="form-select form-control" asp-items="@(new SelectList(@ViewBag.CategoryList,"Id","Name"))">
+                            <option value="">Lütfen bir kategori seçiniz...</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ShortContent" class="form-label fw-semibold">Kısa Özet <span class="text-danger">*</span></label>
+                        <textarea asp-for="ShortContent" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="ShortContent" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label fw-semibold">Makale İçeriği <span class="text-danger">*</span></label>
+                        <textarea asp-for="Content" id="elm1" class="form-control" rows="10"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Sağ Kolon: Resim Yükleme, Durum ve SEO (Sağa Yaslı) -->
+                <div class="col-lg-4 col-xl-4 col-xxl-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kapak Görseli</label>
+
+                        @if (!string.IsNullOrEmpty(Model.Thumbnail))
+                        {
+                            <div class="existing-image-box w-100 mb-2">
+                                <span class="existing-image-badge"><i class="bx bx-image"></i> Mevcut Görsel</span>
+                                <img src="@Model.Thumbnail" alt="@Model.Title" class="img-fluid" style="border-radius: 8px; max-height: 180px; width: 100%; object-fit: cover;" />
+                            </div>
+                        }
+
+                        <div class="file-dropzone">
+                            <input type="file" name="CoverImages" accept="image/*" />
+                            <div class="file-dropzone-content">
+                                <div class="file-dropzone-icon">
+                                    <i class="bx bx-cloud-upload"></i>
+                                </div>
+                                <div class="file-dropzone-title">Görseli Değiştir</div>
+                                <div class="file-dropzone-hint">Yeni bir dosya seçin veya sürükleyin</div>
+                            </div>
+                        </div>
+                        <div class="file-preview-card">
+                            <img class="file-preview-thumb" src="" alt="Önizleme" />
+                            <div class="file-preview-details">
+                                <div class="file-preview-name">dosya.jpg</div>
+                                <div class="file-preview-size">0 KB</div>
+                            </div>
+                            <button type="button" class="file-preview-remove">Kaldır</button>
+                        </div>
+                        <span class="text-danger" asp-validation-for="Thumbnail"></span>
+                    </div>
+
+                    <div class="card p-3 mb-3" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+                        <h6 class="fw-bold mb-3 text-dark"><i class="bx bx-cog text-primary"></i> Durum ve SEO</h6>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActiveSwitch">
+                            <label class="form-check-label fw-semibold" for="isActiveSwitch">Yayında (Aktif)</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SeoTags" class="form-label font-size-13 text-muted">SEO Etiketleri</label>
+                            <input asp-for="SeoTags" class="form-control" placeholder="Örn: haber, duyuru, insaat" />
+                            <span asp-validation-for="SeoTags" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SeoDescription" class="form-label font-size-13 text-muted">Arama Motoru Açıklaması</label>
+                            <textarea asp-for="SeoDescription" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 mt-3 border-top">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bx bx-arrow-back"></i> İptal
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-check"></i> Değişiklikleri Kaydet
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+@model PageDto
+
+@{
+    ViewBag.Title = "Sayfa Detayları";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">@Model.Page.PageTitle</h4>
+                <p class="text-muted font-size-13 mb-0">Sayfa detay ve içerik önizlemesi</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Page">Sayfalar</a></li>
+                    <li class="breadcrumb-item active">Detay</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="page-content pt-2">
+                    @Html.Raw(Model.Page.Description)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3 border-bottom pb-2">Sayfa Bilgileri</h6>
+
+                <div class="mb-2 d-flex justify-content-between">
+                    <span class="text-muted">Sıra No:</span>
+                    <span class="fw-semibold">@Model.Page.PageNumber</span>
+                </div>
+
+                <div class="mb-2 d-flex justify-content-between">
+                    <span class="text-muted">Anasayfada:</span>
+                    <span class="fw-semibold">@(Model.Page.IsMainPage ? "Evet" : "Hayır")</span>
+                </div>
+
+                <div class="mb-2 d-flex justify-content-between">
+                    <span class="text-muted">Oluşturulma:</span>
+                    <span class="fw-semibold">@Model.Page.CreatedTime.ToShortDateString()</span>
+                </div>
+
+                <div class="d-grid gap-2 pt-3 border-top mt-3">
+                    <a asp-action="Edit" asp-controller="Page" asp-route-id="@Model.Page.Id" class="btn btn-primary">
+                        <i class="bx bx-edit"></i> Düzenle
+                    </a>
+                    <a asp-action="Index" asp-controller="Page" class="btn btn-secondary">
+                        <i class="bx bx-arrow-back"></i> Listeye Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

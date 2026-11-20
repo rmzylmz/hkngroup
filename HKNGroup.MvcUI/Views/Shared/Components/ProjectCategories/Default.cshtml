@@ -1,0 +1,10 @@
+@model ProjectCategoryListDto
+@foreach (var item in Model.ProjectCategories)
+{
+    <li class="nav-item w-100 py-2">
+        <a asp-controller="Home" asp-action="BlogWithProjectCategory" asp-route-category="@SeoHelper.ToSeoUrl(item.Name)" asp-route-id="@item.Id" class="nav-link">
+            @Html.Raw(item.CoverPhoto) @item.Name
+        </a>
+    </li>
+}
+

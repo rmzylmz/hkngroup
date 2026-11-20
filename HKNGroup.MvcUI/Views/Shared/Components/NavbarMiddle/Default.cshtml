@@ -1,0 +1,51 @@
+@model SiteSettingsUpdateDto
+<div class="menu-top">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-auto">
+                <div class="header-logo">
+                    <a asp-controller="Home" asp-action="Index">
+                        <img src="@Model.Logo" alt="logo" width="228" height="95">
+                    </a>
+                </div>
+            </div>
+            <div class="col-auto d-none d-lg-inline-block">
+                <div class="header-info-wrap">
+                    <div class="header-info">
+                        <div class="header-info_icon icon-btn">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="header-info_text">İletişim Telefonu</span>
+                            <a class="header-info_link" href="tel:@Html.Raw(Model.ContactNumber)">@Html.Raw(Model.ContactNumber)</a>
+                        </div>
+                    </div>
+                    <div class="header-info">
+                        <div class="header-info_icon icon-btn">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="header-info_text"> E-Posta Adresimiz</span>
+                            <a class="header-info_link" href="mailto:@Html.Raw(Model.SiteMail)">@Html.Raw(Model.SiteMail)</a>
+                        </div>
+                    </div>
+                    <div class="header-info">
+                        <div class="header-info_icon icon-btn">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="header-info_text">Çalışma Saati</span>
+                            <p class="header-info_link">@Model.WorkingTime</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <a target="_blank" href="/iletisim" class="as-btn gr-btn d-lg-inline-block d-none">Bize Ulaşın</a>
+                <button type="button" class="as-menu-toggle d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="logo-bg"></div>
+</div>
+

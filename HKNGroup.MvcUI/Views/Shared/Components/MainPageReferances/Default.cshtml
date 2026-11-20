@@ -1,0 +1,32 @@
+@model ReferanceListDto
+
+
+<div class="space-bottom ">
+    <div class="container">
+        <div class="title-box1  text-center">
+            <div class="bg-white"> 
+                <h2 class=" title">
+                    Referanslarımız
+                </h2>
+            </div>
+        </div>
+        <div class="row as-carousel" id="brandSlide" data-slide-show="6" data-lg-slide-show="5" data-md-slide-show="4" data-sm-slide-show="3" data-xs-slide-show="3">
+
+
+            @foreach (var item in Model.Referances)
+            {
+                <div class="col-auto">
+                    <div class="text-center">
+                        <img src="@item.siteBaseUrl@item.Thumbnail" alt="@item.Title">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+

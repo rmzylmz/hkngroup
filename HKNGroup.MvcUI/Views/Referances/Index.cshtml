@@ -1,0 +1,34 @@
+@model HKNGroup.WebUI.Models.ReferanceViewModel
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+@{   
+    ViewBag.SeoTitle = "Referansları - Sektörde Güvenilir ve Başarılı Çalışmalar";
+    ViewBag.SeoDescription = "HKN Group referanslarıyla tanışın! Müşteri memnuniyetini ön planda tutan, sektörde lider bir firma olarak gerçekleştirdiğimiz projelerimiz ve başarı hikayelerimizle ilgili detayları keşfedin.";
+    ViewBag.SeoKeywords = "HKN Group referansları, Güvenilir iş ortaklıkları, Başarı hikayeleri, HKN Group müşteri memnuniyeti, Sektörde lider projeler, Referanslarımızın detayları, Başarılı işbirlikleri, HKN Group projeleri";
+}
+<section class="space">
+    <div class="container">
+
+        <div class="row gy-4">
+            @if (Model.ReferanceList.Count > 0)
+            {
+                @foreach (var item in Model.ReferanceList)
+                {
+                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                        <div class="as-team team-grid">
+                            <div class="team-img">
+                                <img src="@item.siteBaseUrl@item.Thumbnail" alt="Team">                                
+                            </div>
+                            <h3 class="team-title">
+                                <a href="#">@item.Title</a>
+                            </h3>
+                           
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,241 @@
+﻿@model SiteSettingsUpdateDto
+
+@{
+    ViewBag.Title = "Site Bilgileri ve Ayarlar";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">Site Ayarları</h4>
+                <p class="text-muted font-size-13 mb-0">Genel site bilgileri, iletişim, logo ve SEO konfigürasyonu</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item active">Site Ayarları</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mb-4 p-3" style="border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;">
+                    <div class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="bx bx-error-circle font-size-18"></i> Lütfen aşağıdaki hataları kontrol ediniz:
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger font-size-13 mb-0" style="padding-left: 1.5rem;"></div>
+                </div>
+            }
+        <form method="post" asp-action="Index" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Logo)
+
+            <div class="row">
+                <!-- Sol Kolon: Sekmeli Ayarlar -->
+                <div class="col-lg-8">
+                    <ul class="nav nav-tabs" id="settingTabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" type="button" data-tab="tab-general">
+                                <i class="bx bx-cog"></i> Genel Ayarlar
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" type="button" data-tab="tab-social">
+                                <i class="bx bxl-instagram"></i> Sosyal Medya
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" type="button" data-tab="tab-seo">
+                                <i class="bx bx-search-alt"></i> SEO & Harita
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Tab 1: Genel Ayarlar -->
+                    <div class="tab-pane-content" id="tab-general">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Site Sahibi / Firma</label>
+                                @Html.TextBoxFor(m => m.SiteOwner, new { @class = "form-control", @placeholder = "HKN Group" })
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Site Sloganı</label>
+                                @Html.TextBoxFor(m => m.SiteSlogan, new { @class = "form-control", @placeholder = "Güvenilir & Yenilikçi Çözümler" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Site Web Adresi (URL) <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.SiteAdress, new { @class = "form-control", @placeholder = "https://www.hkngroup.com", @required = "required" })
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Site Varsayılan Başlık (Title)</label>
+                                @Html.TextBoxFor(m => m.SiteDefaultTitle, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Anasayfa Geniş Başlık (Long Title)</label>
+                            @Html.TextBoxFor(m => m.SiteDefaultLongTitle, new { @class = "form-control" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Telefon Numarası</label>
+                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", @placeholder = "+90 (262) 000 00 00" })
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Çalışma Saatleri</label>
+                                @Html.TextBoxFor(m => m.WorkingTime, new { @class = "form-control", @placeholder = "Hafta içi: 08:30 - 18:00" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Adres Bilgisi</label>
+                            @Html.TextAreaFor(m => m.ContactAdress, new { @class = "form-control", @rows = "3", @placeholder = "Firma açık adresi..." })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-semibold">İletişim Mail Adresi</label>
+                                @Html.TextBoxFor(m => m.SiteMail, new { @class = "form-control", @placeholder = "info@hkngroup.com" })
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-semibold">Mail Şifresi</label>
+                                @Html.TextBoxFor(m => m.SiteMailPass, new { @class = "form-control", @type = "password" })
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-semibold">Mail Sunucusu (Host)</label>
+                                @Html.TextBoxFor(m => m.MailServer, new { @class = "form-control", @placeholder = "mail.hkngroup.com" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Sosyal Medya -->
+                    <div class="tab-pane-content" id="tab-social" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Instagram Sayfası</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bx bxl-instagram text-danger font-size-18"></i></span>
+                                @Html.TextBoxFor(m => m.InstagramSite, new { @class = "form-control", @placeholder = "https://instagram.com/..." })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Facebook Sayfası</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bx bxl-facebook text-primary font-size-18"></i></span>
+                                @Html.TextBoxFor(m => m.FacebookSite, new { @class = "form-control", @placeholder = "https://facebook.com/..." })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Twitter / X Sayfası</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bx bxl-twitter text-info font-size-18"></i></span>
+                                @Html.TextBoxFor(m => m.TwitterSite, new { @class = "form-control", @placeholder = "https://x.com/..." })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">YouTube Kanalı</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bx bxl-youtube text-danger font-size-18"></i></span>
+                                @Html.TextBoxFor(m => m.YoutubeSite, new { @class = "form-control", @placeholder = "https://youtube.com/..." })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: SEO & Harita -->
+                    <div class="tab-pane-content" id="tab-seo" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Anahtar Kelimeler (Keywords)</label>
+                            @Html.TextBoxFor(m => m.SiteKeyword, new { @class = "form-control", @placeholder = "otomotiv, inşaat, hkn group" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Site Açıklaması (Meta Description)</label>
+                            @Html.TextAreaFor(m => m.SiteDescription, new { @class = "form-control", @rows = "4", @placeholder = "Arama motorlarında gözükecek genel site açıklaması..." })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Google Harita (iFrame Kodu)</label>
+                            @Html.TextBoxFor(m => m.IFrame, new { @class = "form-control", @placeholder = "<iframe src='...'></iframe>" })
+                            <small class="text-muted">Google Haritalar üzerinden 'Haritayı yerleştir' seçeneğindeki iframe kodunu yapıştırın.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Kolon: Logo Yönetimi -->
+                <div class="col-lg-4">
+                    <div class="card p-3" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+                        <h6 class="fw-bold mb-3 text-dark"><i class="bx bx-image text-primary"></i> Site Logosu</h6>
+
+                        <div class="mb-3 text-center p-3" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
+                            <img src="@Model.Logo" alt="Logo" id="logoPreview" style="max-width: 100%; max-height: 80px; object-fit: contain;" />
+                        </div>
+
+                        <div class="file-dropzone mb-2" style="padding: 1.25rem 1rem;">
+                            <input type="file" name="fileImg" id="txtLogoInput" accept="image/*" />
+                            <div class="file-dropzone-content">
+                                <div class="file-dropzone-icon" style="width: 40px; height: 40px; font-size: 20px;">
+                                    <i class="bx bx-cloud-upload"></i>
+                                </div>
+                                <div class="file-dropzone-title">Yeni Logo Seçin</div>
+                                <div class="file-dropzone-hint">PNG (Şeffaf arkaplan önerilir), SVG</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 mt-4 border-top">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bx bx-save"></i> Ayarları Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tab switching
+        var tabs = document.querySelectorAll("#settingTabs .nav-link");
+        var panes = document.querySelectorAll(".tab-pane-content");
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                var targetId = this.getAttribute("data-tab");
+                tabs.forEach(t => t.classList.remove("active"));
+                this.classList.add("active");
+
+                panes.forEach(function (pane) {
+                    pane.style.display = pane.id === targetId ? "block" : "none";
+                });
+            });
+        });
+
+        // Logo instant preview
+        var logoInput = document.getElementById("txtLogoInput");
+        var logoPreview = document.getElementById("logoPreview");
+        if (logoInput && logoPreview) {
+            logoInput.addEventListener("change", function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        logoPreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,84 @@
+
+@using Microsoft.AspNetCore.Http;
+@model HKNGroup.WebUI.Models.OurServicesViewModel
+
+@{
+    ViewBag.SeoTitle = Model.OurServiceDetay.Title;
+    ViewBag.SeoDescription = Model.OurServiceDetay.SeoDescription;
+    ViewBag.SeoKeywords = Model.OurServiceDetay.SeoTags;
+}
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+<section class="as-blog-wrapper blog-details space-top space-extra-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-4 col-lg-5">
+                <aside class="sidebar-area">
+
+                    <div class="widget widget_categories">
+                        <ul>
+                            @foreach (var item in Model.OurServiceList)
+                            {
+                                <li>
+                                    <a href="/@RoutingEnum.Hizmet/@item.Url">@item.Title</a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                   
+                    <div class="widget widget_banner">
+                        <h4 class="widget_title">Bize Ulaşın</h4>
+                        <div class="widget-banner">
+                            <p class="banner-text">
+                                Firma ve projeler hakkında daha fazla bilgi ve teklif almak için lütfen bizimle iletişime geçiniz.
+                            </p>
+                            <a href="#" class="banner-link">
+                                <i class="fas fa-location"></i> @Model.SiteSetting.ContactAdress
+                            </a>
+                            <a href="mailto: @Model.SiteSetting.SiteMail" class="banner-link">
+                                <i class="fas fa-envelope"></i> @Model.SiteSetting.SiteMail
+                            </a>
+                            <a href="tel: @Model.SiteSetting.ContactNumber" class="banner-link">
+                                <i class="fas fa-phone"></i>  @Model.SiteSetting.ContactNumber
+                            </a>
+
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+            <div class="col-xxl-8 col-lg-7">
+                @if (ViewBag.Error != "Error")
+                {
+                    <div class="as-blog blog-single ">
+                        @{
+                            var thumnail = @Model.OurServiceDetay.Images;
+                            thumnail = thumnail.Replace("cover", "");
+                        }
+                        <img src="/@thumnail" alt="@Model.OurServiceDetay.Title" style="height:470px; width:798px">
+                        
+                       
+                        <div class="blog-content">
+                            <h2 class="blog-title mb-4">@Model.OurServiceDetay.Title</h2>
+
+                            @Html.Raw(Model.OurServiceDetay.Description)
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="as-blog blog-single">
+                        <div class="blog-content">
+                            <p>Belki şu anda içeriği bulunmuyor, ancak sabırla bekleyin çünkü en güzel şeyler genellikle bizi beklerken bulur.</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+

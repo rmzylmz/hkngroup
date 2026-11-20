@@ -1,0 +1,26 @@
+<div class="sticky-wrapper">
+    <div class="sticky-active">
+        <div class="container">
+            <div class="menu-area">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <nav class="main-menu d-none d-lg-inline-block">
+                            @await Component.InvokeAsync("MenuViewComponents")
+                        </nav>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <div class="header-button">
+                            <button type="button" class="icon-btn searchBoxToggler" aria-label="search">
+                                <i class="far fa-search"></i>
+                            </button>
+                          
+                            <a href="#" class="icon-btn sideMenuToggler" aria-label="bars">
+                                <i class="far fa-bars"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

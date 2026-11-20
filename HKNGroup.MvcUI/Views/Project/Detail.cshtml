@@ -1,0 +1,135 @@
+
+
+@model HKNGroup.WebUI.Models.ProjectViewModel;
+
+@{
+    ViewBag.SeoTitle = Model.ProjectDetay.Title;
+    ViewBag.SeoDescription = Model.ProjectDetay.SeoDescription;
+    ViewBag.SeoKeywords = Model.ProjectDetay.SeoTags;
+}
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+<section class="space-top space-extra-bottom">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xxl-8 col-lg-7">
+                <div class="page-img">
+                    @{
+                        var imgPath = Model.ProjectDetay.CoverImageUrl;
+                        imgPath = imgPath.Replace("cover", "");
+                    }
+                    <img src="@Model.ProjectDetay.siteBaseUrl@imgPath" alt="@Model.ProjectDetay.Title">
+                </div>
+                <div class="as-blog blog-single p-4">
+                    <div class="page-single">
+                        <div class="page-content">
+                            <h2 class="page-title">@Model.ProjectDetay.Title</h2>
+                            <p> @Html.Raw(Model.ProjectDetay.Content)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-5">
+                <aside class="sidebar-area">
+                    <div class="widget widget_info">
+                        <h3 class="widget_title">Proje Hakkında</h3>
+                        <div class="info-list">
+                            <ul>
+
+                                <li>
+                                    <i class="fa-light fa-location-dot"></i>
+                                    <div>
+                                        <strong class="title">Konum: </strong>
+                                        <span class="text">@Model.ProjectDetay.Location</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fa-light fa-calendar-days"></i>
+                                    <div>
+                                        <strong class="title">Proje Tarihi: </strong>
+                                        <span class="text">@Model.ProjectDetay.ProjectDate</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fa-light fa-folder-open"></i>
+                                    <div>
+                                        <strong class="title">Proje İsmi: </strong>
+                                        <span class="text">@Model.ProjectDetay.Title</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fa-light fa-envelope"></i>
+                                    <div>
+                                        <strong class="title">Email Adresi: </strong>
+                                        <span class="text">@ViewData["Email"]</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="widget widget_tag_cloud">
+                        <h3 class="widget_title">Bize Soru Sorun</h3>
+
+                        <p>Bizimle iletişime geçmek ve soru sormak için iletişim butonuna tıklayınız.</p>
+                        <div class="tagcloud">
+                            <a href="/@RoutingEnum.Iletisim">İletişim</a>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section class="project-sec2 bg-top-center" data-bg-src="/assets/img/bg/project_bg_1.jpg">
+    <div class="title-shape1">
+        <img src="/assets/img/shape/title_shape_1.png" alt="shape">
+    </div>
+    <div class="container z-index-common">
+        <div class="row mb-60 justify-content-lg-between justify-content-center align-items-end">
+            <div class="col-xl-9 col-lg-10">
+                <div class="title-area text-center text-lg-start">
+                    <span class="sub-title">@Model.ProjectDetay.Title</span>
+                    <h2 class="sec-title">Proje Resimlerimiz</h2>                   
+                </div>
+            </div>
+            <div class="col-lg-auto d-none d-lg-block">
+                <div class="sec-btn">
+                    <div class="icon-box text-center">
+                        <button data-slick-prev="#projectSlide2" class="slick-arrow default">
+                            <i class="far fa-arrow-left"></i>
+                        </button>
+                        <button data-slick-next="#projectSlide2" class="slick-arrow default">
+                            <i class="far fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <div class="row as-carousel slider-shadow " id="projectSlide2" data-slide-show="3" data-lg-slide-show="3" data-md-slide-show="2" data-sm-slide-show="1">
+           
+            @foreach (var item in Model.ProjectImages)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-box">
+                        <a href="@item.siteBaseUrl@item.URL.Replace("cover","")" class="project-btn1 popup-image">
+                        <div class="project-img" data-overlay="title" data-opacity="6">
+                                <div class="img-transition">
+                                <img src="@item.siteBaseUrl@item.URL" alt="@item.Name" >
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<br />
+<br />
+<br />
+

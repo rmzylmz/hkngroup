@@ -1,0 +1,137 @@
+@model HKNGroup.WebUI.Models.HomeViewModel
+@{
+    ViewBag.SeoTitle = "Anasayfa";
+    ViewBag.SeoDescription = Model.SiteSetting.SiteDescription;
+    ViewBag.SeoKeywords = Model.SiteSetting.SiteKeyword;
+
+    Context.Session.SetString("MetaDescription", Model.SiteSetting.SiteDescription.ToString());
+    Context.Session.SetString("WebSite", Model.SiteSetting.SiteAdress.ToString());
+}
+
+
+<div class="as-hero-wrapper hero-4">
+    <div class="hero-slider-4 as-carousel" data-fade="true" data-slide-show="1" data-md-slide-show="1">
+        @foreach (var item in Model.Sliders)
+        {
+            <div class="as-hero-slide" style="max-height: 1050px;">
+                <section class="as-hero-bg banner" style="background-image:linear-gradient(90deg, rgba(6,3,50,1) 0%, rgba(13,3,6,0.28625710538121496) 100%),url(@item.siteBaseUrl@item.Thumbnail),url('/assets/img/1/slide1.jpg');"></section>
+                <div class="container z-index-common">
+                    <div class="hero-style4">
+                        <span class="hero-subtitle" data-ani="slideinleft" data-ani-delay="0.0s">@item.Title</span>
+                        @{
+                            var sentence = @item.Description;
+                            var words = sentence.Split(' ');
+                            var lastWord = words[^1];
+                            var remainingWords = string.Join(" ", words[..^1]);
+                        }
+                        <h1 class="hero-title" style="width:60%!important" data-ani="slideinleft" data-ani-delay="0.1s">
+                            @remainingWords <span style="color:#F11F22">@lastWord</span>
+                        </h1>
+
+                        <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.3s">@item.Description2</p>
+                        <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.4s">
+                            <a asp-action="Projects" asp-controller="Home" class="as-btn gr-btn">Projelerimiz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="hero-tab-wrap">
+        <button data-slick-prev=".hero-slider-4" class="simple-icon" aria-label="up">
+            <i class="far fa-chevron-up"></i>
+        </button>
+        <div class="hero-tab" data-asnavfor=".hero-slider-4">
+            @{
+                bool isFirst = true;
+
+                @foreach (var item in Model.Sliders)
+                {
+                    <div class="tab-btn @(isFirst ? "active": "")">
+                        <img src="@item.siteBaseUrl@item.Thumbnail" height="79" width="79" alt="@item.Title" onerror="this.onerror=null; this.src='/assets/img/1/slide1.jpg';">
+                    </div>
+                    isFirst = false;
+                }
+            }
+        </div>
+        <button data-slick-next=".hero-slider-4" class="simple-icon" aria-label="down">
+            <i class="far fa-chevron-down"></i>
+        </button>
+    </div>
+</div>
+<section class="">
+    <div class="row gx-0 justify-content-center">
+        <div class="col-xxl-3 col-md-6 feature-card-wrap">
+            <div class="feature-card" data-bg-src="/assets/img/bg/feature_card_bg.jpg">
+                <div class="feature-card_icon">
+                    <img src="assets/img/icon/feature_1_1.svg" alt="icon">
+                </div>
+                <h3 class="feature-card_title">Planlama</h3>
+                <p class="feature-card_text">HKN Grup sizin geleceğiniz ve sağlıklı yaşamanız için güvenli yapılar inşaa ediyor.</p>
+            </div>
+        </div>
+        <div class="col-xxl-3 col-md-6 feature-card-wrap">
+            <div class="feature-card" data-bg-src="assets/img/bg/feature_card_bg.jpg">
+                <div class="feature-card_icon">
+                    <img src="assets/img/icon/feature_1_3.svg" alt="icon">
+                </div>
+                <h3 class="feature-card_title">Projelendirme</h3>
+                <p class="feature-card_text">HKN Grup istediğiniz zamana en sağlıklı yapılarla zamanında teslim eder.</p>
+            </div>
+        </div>
+        <div class="col-xxl-3 col-md-6 feature-card-wrap">
+            <div class="feature-card" data-bg-src="assets/img/bg/feature_card_bg.jpg">
+                <div class="feature-card_icon">
+                    <img src="assets/img/icon/feature_1_2.svg" alt="icon">
+                </div>
+                <h3 class="feature-card_title">Uygulama</h3>
+                <p class="feature-card_text">HKN Grup yaptığı güvenli ve uygun fiyatta yapılarla hizmetinize sunuyor.</p>
+            </div>
+        </div>
+        <div class="col-xxl-3 col-md-6 feature-card-wrap">
+            <div class="feature-card" data-bg-src="assets/img/bg/feature_card_bg.jpg">
+                <div class="feature-card_icon">
+                    <img src="assets/img/icon/feature_1_4.svg" alt="icon">
+                </div>
+                <h3 class="feature-card_title">Sunum</h3>
+                <p class="feature-card_text">HKN Grup inşaa bittikten sonra anahtar teslim ile yapınızı size teslim eder</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@foreach (var item in Model.Pages)
+{
+    @Html.Raw(item.Description)
+}
+ 
+
+ 
+ 
+@await Component.InvokeAsync("MainPageProjects")
+@await Component.InvokeAsync("MainPageReferances")
+
+<section class="space background-image" data-overlay="title" data-opacity="9" style="background-image: url(/assets/img/bg/2.jpg);">
+    <div class="container z-index-common text-center">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <div class="title-area text-center mb-40">
+                    <h2 class="sec-title text-white">Hakan Grup</h2>
+                    <p class="sec-text text-white ms-auto me-auto">Hakan Grup ile güvenli, modern ve kaliteli yapılar inşaa etmek için iletişime geçiniz.</p>
+                </div><div class="btn-group justify-content-center">
+                    <a asp-action="Contact" class="as-btn style2">İletişime Geç</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Component.InvokeAsync("MainPageArticles")
+ 
+
+ 
+
+
+
+

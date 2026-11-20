@@ -1,0 +1,151 @@
+@model MessageListDto
+
+@{
+    ViewBag.Title = "Gelen Mesajlar";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">Gelen Mesajlar</h4>
+                <p class="text-muted font-size-13 mb-0">İletişim formundan gönderilen ziyaretçi mesajları</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item active">Gelen Kutusu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.ResultStatus == ResultStatus.Success)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-3">
+                <span class="badge" style="background: #eff6ff; color: #2563eb; font-weight: 600; padding: 6px 12px; font-size: 13px;">
+                    Toplam @(Model?.Messages?.Count ?? 0) Mesaj
+                </span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Gönderen</th>
+                            <th>E-Posta</th>
+                            <th>Konu</th>
+                            <th>Mesaj</th>
+                            <th class="text-center">Durum</th>
+                            <th>Tarih</th>
+                            <th class="text-end">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Messages != null && Model.Messages.Any())
+                        {
+                            @foreach (var item in Model.Messages)
+                            {
+                                <tr id="tr_@item.Id">
+                                    <td class="fw-bold text-dark font-size-14">
+                                        <i class="bx bx-user text-muted me-1"></i> @item.FirstName @item.LastName
+                                    </td>
+                                    <td>
+                                        <a href="mailto:@item.Email" class="text-primary font-size-13">@item.Email</a>
+                                    </td>
+                                    <td class="fw-semibold text-dark">@item.Subject</td>
+                                    <td>
+                                        <div class="text-muted font-size-13" style="max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="@item.Text">
+                                            @item.Text
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+                                                <i class="bx bx-check-double"></i> Okundu
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;">
+                                                Yeni
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="text-muted font-size-13">@item.CreatedTime.ToShortDateString()</td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex gap-1">
+                                            <a class="btn btn-sm btn-primary" asp-controller="Messages" asp-action="Checked" asp-route-id="@item.Id" title="Okundu Olarak İşaretle">
+                                                <i class="bx bx-check"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-secondary" href="mailto:@item.Email" title="E-Posta Yanıtla">
+                                                <i class="bx bx-reply"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="Sil(@item.Id)" title="Sil">
+                                                <i class="bx bx-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="bx bx-envelope font-size-36 d-block mb-2 text-muted"></i>
+                                    Gelen kutunuzda mesaj bulunmuyor.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function Sil(id) {
+        Swal.fire({
+            title: "Emin misiniz?",
+            text: "Bu mesajı silmek istediğinize emin misiniz?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Evet, Sil",
+            cancelButtonText: "İptal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DoHardDelete", "Messages")/' + id,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        var el = document.getElementById('tr_' + id);
+                        if (el) el.remove();
+                        Swal.fire({
+                            title: "Başarılı",
+                            text: "Mesaj silindi.",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Hata",
+                            text: "Mesaj silinirken hata oluştu.",
+                            icon: "error",
+                            confirmButtonText: "Tamam"
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>

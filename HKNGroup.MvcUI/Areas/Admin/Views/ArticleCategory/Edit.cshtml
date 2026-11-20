@@ -1,0 +1,106 @@
+﻿@model ArticleCategoryUpdateDto
+
+@{
+    ViewBag.Title = "Kategori Düzenleme";
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1 font-size-18 fw-bold">Kategori Düzenle</h4>
+                <p class="text-muted font-size-13 mb-0">Kategori adını, görselini veya durumunu güncelleyin</p>
+            </div>
+            <div>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Admin</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="ArticleCategory">Kategoriler</a></li>
+                    <li class="breadcrumb-item active">Düzenle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <div class="card-body">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mb-4 p-3" style="border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;">
+                    <div class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="bx bx-error-circle font-size-18"></i> Lütfen aşağıdaki hataları kontrol ediniz:
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger font-size-13 mb-0" style="padding-left: 1.5rem;"></div>
+                </div>
+            }
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CategoryFA" />
+
+            <div class="row g-4">
+                <!-- Sol Kolon: Başlık ve Açıklama (Geniş Alan) -->
+                <div class="col-lg-8 col-xl-8 col-xxl-9">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-semibold">Kategori Adı <span class="text-danger">*</span></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-semibold">Açıklama <span class="text-danger">*</span></label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActiveSwitch">
+                        <label class="form-check-label fw-semibold" for="isActiveSwitch">Yayında (Aktif)</label>
+                    </div>
+                </div>
+
+                <!-- Sağ Kolon: Görsel Dropzone (Sağa Yaslı) -->
+                <div class="col-lg-4 col-xl-4 col-xxl-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kategori Kapak Görseli</label>
+
+                        @if (!string.IsNullOrEmpty(Model.CategoryFA))
+                        {
+                            <div class="existing-image-box w-100">
+                                <span class="existing-image-badge"><i class="bx bx-image"></i> Mevcut Görsel</span>
+                                <img src="@Model.CategoryFA" alt="@Model.Name" class="img-fluid" />
+                            </div>
+                        }
+
+                        <div class="file-dropzone">
+                            <input type="file" name="CoverImages" accept="image/*" />
+                            <div class="file-dropzone-content">
+                                <div class="file-dropzone-icon">
+                                    <i class="bx bx-cloud-upload"></i>
+                                </div>
+                                <div class="file-dropzone-title">Görseli Değiştir</div>
+                                <div class="file-dropzone-hint">Yeni görsel seçin veya sürükleyin</div>
+                            </div>
+                        </div>
+                        <div class="file-preview-card">
+                            <img class="file-preview-thumb" src="" alt="Önizleme" />
+                            <div class="file-preview-details">
+                                <div class="file-preview-name">kategori.jpg</div>
+                                <div class="file-preview-size">0 KB</div>
+                            </div>
+                            <button type="button" class="file-preview-remove">Kaldır</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 mt-3 border-top">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bx bx-arrow-back"></i> İptal
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-check"></i> Değişiklikleri Kaydet
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

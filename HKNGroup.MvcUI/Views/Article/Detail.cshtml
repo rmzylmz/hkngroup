@@ -1,0 +1,126 @@
+
+@model HKNGroup.WebUI.Models.ArticlesViewModel;
+
+@{
+
+    ViewBag.SeoTitle = Model.ArticleDetay.Title;
+    ViewBag.SeoDescription = Model.ArticleDetay.SeoDescription;
+    ViewBag.SeoKeywords = Model.ArticleDetay.SeoTags;
+ 
+}
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+<section class="as-blog-wrapper blog-details space-top space-extra-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-8 col-lg-7">
+                <div class="as-blog blog-single">
+                    <div class="blog-img">
+                        @{
+                            var thumnail = @Model.ArticleDetay.Thumbnail;
+                            thumnail = thumnail.Replace("cover", "");
+                        }
+                        <img src="@Model.ArticleDetay.siteBaseUrl@thumnail" alt="@Model.ArticleDetay.Title" style="height:470px; width:798px">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <a href="#">
+                                <i class="fa-light fa-calendar-days"></i>
+                                @Model.ArticleDetay.CreatedTime.ToShortDateString()
+                            </a>
+                            <a href="#">
+                                <i class="fa-regular fa-comments"></i>
+                                Yorumlar(0)
+                            </a>
+                            <a href="#">
+                                <i class="fa-regular fa-tag"></i>
+                                @Model.ArticleDetay.Category.Name
+                            </a>
+                        </div>
+                        <h2 class="blog-title"> @Model.ArticleDetay.Title</h2>
+                        <p> @Html.Raw(Model.ArticleDetay.Content)</p>
+                    </div>
+                    <div class="share-links clearfix">
+                        <div class="row justify-content-between">
+                            <div class="col-sm-auto text-xl-end">
+                                <span class="share-links-title">Paylaş:</span>
+                                <ul class="social-links">
+                                    <li>
+                                        <a href="https://facebook.com/" target="_blank">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/" target="_blank">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://linkedin.com/" target="_blank">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://instagram.com/" target="_blank">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-5">
+                <aside class="sidebar-area">
+
+                    <div class="widget">
+                        <h3 class="widget_title">Son Eklenenler</h3>
+                        <div class="recent-post-wrap">
+                            @foreach (var item in Model.Articles)
+                            {
+                                <div class="recent-post">
+                                    <div class="media-img">
+                                        <a href="/@RoutingEnum.HaberDetay/@item.Url">
+                                            <img src="@item.siteBaseUrl@item.Thumbnail" alt="@item.Title">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="post-title">
+                                            <a class="text-inherit" href="/@RoutingEnum.HaberDetay/@item.Url">@item.Title</a>
+                                        </h4>
+                                        <div class="recent-post-meta">
+                                            <a href="#">
+                                                <i class="fas fa-calendar-days"></i>
+                                                @item.CreatedTime.ToShortDateString()
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>                      
+                    </div>
+
+                    <div class="widget widget_banner">
+                        <h4 class="widget_title">Bize Ulaşın</h4>
+                        <div class="widget-banner">
+                            <p class="banner-text">
+                                Firma ve projeler hakkında daha fazla bilgi ve teklif almak için lütfen bizimle iletişime geçiniz.
+                            </p>
+                            <a href="#" class="banner-link">
+                                <i class="fas fa-location-dot"></i> @TempData["Adres"]
+                            </a>
+                            <a href="mailto:@TempData["Email"]" class="banner-link">
+                                <i class="fas fa-envelope"></i> @TempData["Email"]
+                            </a>
+                            <a href="tel:@TempData["Tel"]" class="banner-link">
+                                <i class="fas fa-phone"></i> @TempData["Tel"]
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>

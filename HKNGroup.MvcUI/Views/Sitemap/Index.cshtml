@@ -1,0 +1,17 @@
+@model List<HKNGroup.WebUI.Models.SitemapItem>
+
+@{
+    Layout = null;
+}
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    @foreach (var item in Model)
+    {
+        <text>
+            <url>
+                <loc>@item.Url</loc>
+                <lastmod>@item.LastModified.ToString("yyyy-MM-dd")</lastmod>
+            </url>
+        </text>
+    }
+</urlset>

@@ -1,0 +1,70 @@
+@model HKNGroup.WebUI.Models.ArticlesViewModel
+
+@{
+
+    ViewBag.SeoTitle = "Bizden Haberler";
+    ViewBag.SeoDescription = Model.SiteSettings.SiteDescription;
+    ViewBag.SeoKeywords = Model.SiteSettings.SiteKeyword;
+
+}
+
+
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+<section class="space-top space-extra-bottom">
+    <div class="container">
+        <div class="row gy-4">
+            @foreach (var item in Model.Articles)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="blog-box">
+                        <div class="blog-img">
+                            <img src="@item.siteBaseUrl@item.Thumbnail" alt="@item.Title">
+                        </div>
+                        <div class="blog-content">
+                            <a class="date" href="#">
+                                <span class="gr-text">6</span>
+                                Haz
+                            </a>
+                            <div class="blog-meta">
+                                <a href="/@RoutingEnum.HaberDetay/@item.Url">
+                                    <i class="far fa-tag"></i>
+                                    @item.Category.Name
+                                </a>
+                                <a href="#">
+                                    <i class="fal fa-eye"></i>
+                                    Gösterme (@item.ViewsCount)
+                                </a>
+                            </div>
+                            <h3 class="blog-title box-title">
+                                <a href="/@RoutingEnum.HaberDetay/@item.Url">@item.Title</a>
+                            </h3>
+                            <div class="description">
+                                <p class="blog-text">@item.ShortContent</p>
+                            </div>
+
+                            <a href="/@RoutingEnum.HaberDetay/@item.Url" class="gr-link">Devamını Oku</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<style>
+    .description {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+        height: 90px;
+        margin-bottom: 5px;
+    }
+
+    .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

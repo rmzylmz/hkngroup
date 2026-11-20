@@ -1,0 +1,52 @@
+@model HKNGroup.WebUI.Models.OurServicesViewModel;
+ 
+@{
+    ViewBag.SeoTitle = "Hizmetlerimiz";
+    ViewBag.SeoDescription = Model.SiteSetting.SiteDescription;
+    ViewBag.SeoKeywords = Model.SiteSetting.SiteKeyword;
+}
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+<section class="space-top space-extra-bottom">
+    <div class="container">  
+        <div class="row gy-4">
+            @foreach (var item in Model.OurServiceList)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="blog-card">
+                        <div class="blog-img">
+                            <img src="/@item.Images" alt="@item.Title">
+                            <a href="/@RoutingEnum.Hizmet/@item.Url" class="category"><i class="far fa-folder"></i>@item.Title</a>
+                        </div>
+                        <div class="blog-content">
+
+                            <h3 class="blog-title box-title">
+                                <a href="/@RoutingEnum.Hizmet/@item.Url">@item.Title</a>
+                            </h3>
+
+                            <p class="blog-text"> @item.Title hizmetlerimizi incelemek için tıklayınız</p>
+
+                            <a href="/@RoutingEnum.Hizmet/@item.Url" class="gr-link">Detaylı Bilgi </a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+<style>
+    .description {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+

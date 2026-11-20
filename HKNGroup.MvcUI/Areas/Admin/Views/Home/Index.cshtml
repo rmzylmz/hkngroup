@@ -1,0 +1,204 @@
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Yönetim Özeti";
+}
+
+<!-- Üst Bilgi Kartı (Referans Görsel: Abone Bilgileri Stili) -->
+<div class="card card-ferah mb-4">
+    <div class="card-body p-4">
+        <!-- Kart Başlığı: İkon + Mavi Başlık -->
+        <div class="ferah-card-header mb-4">
+            <i class="bx bx-user ferah-header-icon"></i>
+            <h5 class="ferah-header-title mb-0">Yönetici &amp; Hesap Bilgileri</h5>
+        </div>
+
+        <!-- 2 Kolonlu Bilgi Izgarası -->
+        @{
+            var rawFullName = !string.IsNullOrWhiteSpace(Model.SiteSetting?.Yetkili1) && Model.SiteSetting.Yetkili1.Trim().ToLower() != "demo"
+                ? Model.SiteSetting.Yetkili1.Trim()
+                : (!string.IsNullOrWhiteSpace(Model.SiteSetting?.SiteOwner) && Model.SiteSetting.SiteOwner.Trim().ToLower() != "demo" && Model.SiteSetting.SiteOwner.Trim().Contains(' ')
+                    ? Model.SiteSetting.SiteOwner.Trim()
+                    : "Hakan Çalı");
+
+            var nameParts = rawFullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var firstName = nameParts.Length > 1 ? string.Join(" ", nameParts.Take(nameParts.Length - 1)) : nameParts[0];
+            var lastName = nameParts.Length > 1 ? nameParts.Last() : "";
+
+            var gsm = !string.IsNullOrWhiteSpace(Model.SiteSetting?.ContactNumber) && Model.SiteSetting.ContactNumber.Trim().ToLower() != "demo"
+                ? Model.SiteSetting.ContactNumber.Trim()
+                : (!string.IsNullOrWhiteSpace(Model.SiteSetting?.Yetkili1Tel) && Model.SiteSetting.Yetkili1Tel.Trim().ToLower() != "demo"
+                    ? Model.SiteSetting.Yetkili1Tel.Trim()
+                    : "5445564922");
+
+            var email = !string.IsNullOrWhiteSpace(Model.SiteSetting?.SiteMail) && Model.SiteSetting.SiteMail.Trim().ToLower() != "demo@demo.com"
+                ? Model.SiteSetting.SiteMail.Trim()
+                : "info@hkngroup.com";
+
+            var address = !string.IsNullOrWhiteSpace(Model.SiteSetting?.ContactAdress) && Model.SiteSetting.ContactAdress.Trim().ToLower() != "demo"
+                ? Model.SiteSetting.ContactAdress.Trim()
+                : (!string.IsNullOrWhiteSpace(Model.SiteSetting?.SiteAdress) && Model.SiteSetting.SiteAdress.Trim().ToLower() != "demo"
+                    ? Model.SiteSetting.SiteAdress.Trim()
+                    : "SOĞUKPINAR MAH. LARA SK. NO: 13 DAİRE: 46 ÇEKMEKÖY / İSTANBUL");
+        }
+        <div class="row g-4">
+            <!-- Sol Sütun -->
+            <div class="col-lg-6">
+                <div class="ferah-info-list">
+                    <div class="ferah-info-row">
+                        <span class="info-label">Sistem Kodu :</span>
+                        <span class="info-value">HKN-8505656481</span>
+                    </div>
+                    <div class="ferah-info-row">
+                        <span class="info-label">Adı :</span>
+                        <span class="info-value text-uppercase">@firstName</span>
+                    </div>
+                    <div class="ferah-info-row">
+                        <span class="info-label">Soyadı :</span>
+                        <span class="info-value text-uppercase">@lastName</span>
+                    </div>
+                    <div class="ferah-info-row">
+                        <span class="info-label">Hesap Tipi :</span>
+                        <span class="info-value text-primary fw-bold">Süper Yönetici (Full Yetkili)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ Sütun -->
+            <div class="col-lg-6">
+                <div class="ferah-info-list">
+                    <div class="ferah-info-row">
+                        <span class="info-label">Gsm :</span>
+                        <span class="info-value">@gsm</span>
+                    </div>
+                    <div class="ferah-info-row">
+                        <span class="info-label">Mail :</span>
+                        <span class="info-value">@email</span>
+                    </div>
+                    <div class="ferah-info-row">
+                        <span class="info-label">Adres :</span>
+                        <span class="info-value font-size-13 text-uppercase">
+                            @address
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alt Kısım: Aktif Modüller & İstatistikler (Referans Görsel: Aldığım Hizmetler Stili) -->
+<div class="ferah-section-header mb-3">
+    <i class="bx bx-right-arrow-circle ferah-section-icon"></i>
+    <h5 class="ferah-section-title mb-0">Aktif Sistem Modülleri &amp; Hizmetler</h5>
+</div>
+
+<div class="row g-3">
+    <!-- Alt Kart 1: Web Platformu -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-service-topline h-100">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="service-title">Kurumsal Web Altyapısı</h5>
+                    <div class="service-divider"></div>
+
+                    <div class="service-row">
+                        <span class="service-label">Son Güncelleme:</span>
+                        <span class="service-value">04-11-2026</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Platform Durumu:</span>
+                        <span class="service-badge-active">Aktif / Yayında</span>
+                    </div>
+
+                    <h6 class="service-subtitle mt-3">Paket Bilgilerim</h6>
+                    <div class="service-divider"></div>
+
+                    <div class="service-row">
+                        <span class="service-label">Yönetim Modülü:</span>
+                        <span class="service-value text-primary fw-semibold">HKN Corporate SaaS</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Yayınlanan Sayfa:</span>
+                        <span class="service-value">@ViewBag.Sayfalar Adet</span>
+                    </div>
+                </div>
+
+                <div class="pt-3 mt-3 border-top">
+                    <a href="/Admin/SiteSettings" class="btn btn-sm btn-outline-primary w-100">
+                        <i class="bx bx-cog"></i> Site Ayarlarını Düzenle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alt Kart 2: Projeler & Portföy -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-service-topline h-100">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="service-title">Proje &amp; Portföy Yönetimi</h5>
+                    <div class="service-divider"></div>
+
+                    <div class="service-row">
+                        <span class="service-label">Toplam Proje:</span>
+                        <span class="service-value fw-bold text-primary">@ViewBag.ToplamProje Adet</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Tamamlanan:</span>
+                        <span class="service-value">@ViewBag.TamamlananProje Proje</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Devam Eden:</span>
+                        <span class="service-value">@ViewBag.DevamEdenProje Proje</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Planlanan:</span>
+                        <span class="service-value">@ViewBag.PlanlananProje Proje</span>
+                    </div>
+                </div>
+
+                <div class="pt-3 mt-3 border-top">
+                    <a href="/Admin/Project" class="btn btn-sm btn-outline-primary w-100">
+                        <i class="bx bx-briefcase-alt"></i> Projeleri İncele
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alt Kart 3: İçerik & İletişim -->
+    <div class="col-lg-4 col-md-12">
+        <div class="card card-service-topline h-100">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="service-title">İçerik &amp; İletişim Havuzu</h5>
+                    <div class="service-divider"></div>
+
+                    <div class="service-row">
+                        <span class="service-label">Aktif Makaleler:</span>
+                        <span class="service-value fw-bold text-primary">@ViewBag.AktifMakale Yazı</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Gelen Mesajlar:</span>
+                        <span class="service-value">@ViewBag.MessageCount Mesaj</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Kayıtlı Hizmetler:</span>
+                        <span class="service-value">@ViewBag.Hizmetler Faaliyet</span>
+                    </div>
+                    <div class="service-row">
+                        <span class="service-label">Slider Görselleri:</span>
+                        <span class="service-value">@ViewBag.SliderCount Slayt</span>
+                    </div>
+                </div>
+
+                <div class="pt-3 mt-3 border-top">
+                    <a href="/Admin/Article" class="btn btn-sm btn-outline-primary w-100">
+                        <i class="bx bx-news"></i> Makaleleri Yönet
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

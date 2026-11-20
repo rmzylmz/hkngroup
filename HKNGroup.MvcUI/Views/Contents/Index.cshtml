@@ -1,0 +1,22 @@
+@model PageDto
+@{
+
+    ViewBag.SeoTitle = Model.Page.SEOTitle;
+    ViewBag.SeoDescription = Model.Page.SEODescription;
+    ViewBag.SeoKeywords = Model.Page.SEOKeywords;
+}
+<partial name="~/Views/Shared/Partials/Breadcumb/Index.cshtml" />
+
+@if (ViewBag.Error != "Error")
+{
+    <p class="mt-n2 mb-4"> @Html.Raw(Model.Page.Description)</p>
+}
+else
+{
+    <div class="as-blog blog-single">
+        <div class="blog-content">
+            <p>Belki şu anda içeriği bulunmuyor, ancak sabırla bekleyin çünkü en güzel şeyler genellikle bizi beklerken bulur.</p>
+        </div>
+    </div>
+}
+
